@@ -1,0 +1,8 @@
+obj                                                     label                     color      objectLabel            role
+--------------------------------------------------------------------------------------------------------------------------------------------
+g07:blueCup01                                           blue cup 01               blue       blue_cup               cap:TargetObject
+g07:fork01                                              fork 01                   silver     cutlery_fork           cap:TargetObject
+g07:knife01                                             knife 01                  silver     cutlery_knife          cap:TargetObject
+g07:pinkCup01                                           pink cup 01               pink       pink_cup               cap:TargetObject
+g07:toyBlock01                                          toy block 01              red        toy_block_red          cap:CollectableObject
+g07:toyBlock02                                          toy block 02              blue       toy_block_blue         cap:CollectableObject

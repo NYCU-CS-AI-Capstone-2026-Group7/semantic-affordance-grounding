@@ -1,0 +1,228 @@
+@prefix cap:     <https://hcis.io/ontology/aicapstone/2026/> .
+@prefix g07:     <https://hcis.io/ontology/aicapstone/2026/group07/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix vann:    <http://purl.org/vocab/vann/> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+
+# ===========================================================================
+# 1. Ontology Metadata
+# ===========================================================================
+
+<https://hcis.io/ontology/aicapstone/2026/group07>
+    a owl:Ontology ;
+    owl:imports <https://hcis.io/ontology/aicapstone/2026> ;
+    rdfs:label "AI Capstone 2026 Group 07 Ontology"@en ;
+    rdfs:comment
+        "Group 07 semantic grounding ontology. Extends the shared course vocabulary with group-specific object instances, task assignments, and the GraspableObject inference pattern for the AI Capstone 2026 Physical AI project."@en ;
+    dcterms:title "AI Capstone 2026 Group 07 Environment Instance Ontology"@en ;
+    dcterms:description
+        "This ontology defines Group 07's object instances for the three baseline manipulation tasks (cup stacking, cutlery arrangement, toy block collection), the OWL equivalentClass axiom for inferring graspable objects, and group-specific gripper constraints."@en ;
+    dcterms:creator g07:team07 ;
+    dcterms:created "2026-05-29"^^xsd:date ;
+    dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+    vann:preferredNamespacePrefix "g07" ;
+    vann:preferredNamespaceUri "https://hcis.io/ontology/aicapstone/2026/group07/" .
+
+g07:team07
+    a foaf:Group ;
+    foaf:name "Group 07 Student Team"@en .
+
+# ===========================================================================
+# 2. Inferred Class — GraspableObject
+#
+#    Definition (Description Logic):
+#        cap:GraspableObject ≡ cap:PhysicalObject
+#                              ⊓ ∃cap:hasAffordance.cap:GraspingAffordance
+#
+#    Any individual that is a PhysicalObject and has at least one affordance
+#    of type GraspingAffordance will be automatically classified here by the
+#    OWL reasoner.  Do NOT assert this class membership manually.
+# ===========================================================================
+
+cap:GraspableObject
+    a owl:Class ;
+    rdfs:label "graspable object"@en ;
+    rdfs:comment
+        "A physical object that is inferred (not asserted) to afford grasping by a robot gripper, based on the presence of at least one cap:GraspingAffordance."@en ;
+    skos:definition
+        "A physical object inferred to afford grasping by a robot end effector in the task context."@en ;
+    skos:scopeNote
+        "Membership is derived by the OWL reasoner from the owl:equivalentClass axiom below. Instances must not be manually typed as cap:GraspableObject."@en ;
+    owl:equivalentClass [
+        a owl:Class ;
+        owl:intersectionOf (
+            cap:PhysicalObject
+            [   a owl:Restriction ;
+                owl:onProperty cap:hasAffordance ;
+                owl:someValuesFrom cap:GraspingAffordance
+            ]
+        )
+    ] .
+
+# ===========================================================================
+# 3. Group-Specific End Effector Instance
+# ===========================================================================
+
+g07:parallelGripper01
+    a cap:EndEffector ;
+    rdfs:label "parallel gripper 01"@en ;
+    rdfs:comment
+        "The parallel-jaw gripper used by Group 07's robot arm in all three baseline tasks."@en ;
+    cap:hasApproxWidth "0.08"^^xsd:decimal .
+
+# ===========================================================================
+# 4. Affordance Individuals
+#    Each affordance individual is typed under the appropriate affordance class
+#    so that object instances can link to them via cap:hasAffordance.
+# ===========================================================================
+
+g07:graspingAffordance01
+    a cap:GraspingAffordance ;
+    rdfs:label "grasping affordance instance 01"@en ;
+    rdfs:comment "Shared grasping affordance individual referenced by graspable objects."@en .
+
+g07:containmentAffordance01
+    a cap:ContainmentAffordance ;
+    rdfs:label "containment affordance instance 01"@en ;
+    rdfs:comment "Shared containment affordance individual referenced by the basket."@en .
+
+g07:supportAffordance01
+    a cap:SupportAffordance ;
+    rdfs:label "support affordance instance 01"@en ;
+    rdfs:comment "Shared support affordance individual referenced by the plate."@en .
+
+g07:stackabilityAffordance01
+    a cap:StackabilityAffordance ;
+    rdfs:label "stackability affordance instance 01"@en ;
+    rdfs:comment "Shared stackability affordance individual referenced by cups."@en .
+
+# ===========================================================================
+# 5. Environment Instances
+# ===========================================================================
+
+# ---------------------------------------------------------------------------
+# Task 1: Cup Stacking
+#   Target objects: blue cup, pink cup.
+#   Both cups have GraspingAffordance → will be inferred as GraspableObject.
+# ---------------------------------------------------------------------------
+
+g07:blueCup01
+    a cap:Cup ;
+    rdfs:label "blue cup 01"@en ;
+    rdfs:comment
+        "The blue cup instance defined by Group 07 for the baseline cup-stacking task."@en ;
+    cap:hasColor "blue" ;
+    cap:hasObjectLabel "blue_cup" ;
+    cap:hasApproxWidth "0.075"^^xsd:decimal ;
+    cap:hasTaskRole cap:TargetObject ;
+    cap:hasPoseFrame "world/object_blue_cup" ;
+    cap:hasAffordance g07:graspingAffordance01 ;
+    cap:hasAffordance g07:stackabilityAffordance01 ;
+    cap:canBeManipulatedBy g07:parallelGripper01 .
+
+g07:pinkCup01
+    a cap:Cup ;
+    rdfs:label "pink cup 01"@en ;
+    rdfs:comment
+        "The pink cup instance defined by Group 07 for the baseline cup-stacking task."@en ;
+    cap:hasColor "pink" ;
+    cap:hasObjectLabel "pink_cup" ;
+    cap:hasApproxWidth "0.075"^^xsd:decimal ;
+    cap:hasTaskRole cap:TargetObject ;
+    cap:hasPoseFrame "world/object_pink_cup" ;
+    cap:hasAffordance g07:graspingAffordance01 ;
+    cap:hasAffordance g07:stackabilityAffordance01 ;
+    cap:canBeManipulatedBy g07:parallelGripper01 .
+
+# ---------------------------------------------------------------------------
+# Task 2: Cutlery Arrangement
+#   Target objects: knife, fork (direct manipulation targets).
+#   Reference object: plate (spatial reference for placement, not grasped).
+# ---------------------------------------------------------------------------
+
+g07:knife01
+    a cap:Knife ;
+    rdfs:label "knife 01"@en ;
+    rdfs:comment
+        "The cutlery knife instance defined by Group 07 for the baseline cutlery-arrangement task."@en ;
+    cap:hasColor "silver" ;
+    cap:hasObjectLabel "cutlery_knife" ;
+    cap:hasApproxWidth "0.02"^^xsd:decimal ;
+    cap:hasTaskRole cap:TargetObject ;
+    cap:hasPoseFrame "world/object_knife" ;
+    cap:hasAffordance g07:graspingAffordance01 ;
+    cap:canBeManipulatedBy g07:parallelGripper01 .
+
+g07:fork01
+    a cap:Fork ;
+    rdfs:label "fork 01"@en ;
+    rdfs:comment
+        "The cutlery fork instance defined by Group 07 for the baseline cutlery-arrangement task."@en ;
+    cap:hasColor "silver" ;
+    cap:hasObjectLabel "cutlery_fork" ;
+    cap:hasApproxWidth "0.02"^^xsd:decimal ;
+    cap:hasTaskRole cap:TargetObject ;
+    cap:hasPoseFrame "world/object_fork" ;
+    cap:hasAffordance g07:graspingAffordance01 ;
+    cap:canBeManipulatedBy g07:parallelGripper01 .
+
+g07:plate01
+    a cap:Plate ;
+    rdfs:label "plate 01"@en ;
+    rdfs:comment
+        "The plate instance used as a spatial reference for arranging cutlery. It is not a direct grasp target in Group 07's task model."@en ;
+    cap:hasColor "white" ;
+    cap:hasObjectLabel "dinner_plate" ;
+    cap:hasApproxWidth "0.25"^^xsd:decimal ;
+    cap:hasTaskRole cap:ReferenceObject ;
+    cap:hasPoseFrame "world/object_plate" ;
+    cap:hasAffordance g07:supportAffordance01 .
+
+# ---------------------------------------------------------------------------
+# Task 3: Toy Block Collection
+#   Collectable objects: toy blocks (grasped and moved into basket).
+#   Container target: basket (receives the blocks, not the primary grasp target).
+# ---------------------------------------------------------------------------
+
+g07:toyBlock01
+    a cap:ToyBlock ;
+    rdfs:label "toy block 01"@en ;
+    rdfs:comment
+        "A red toy block to be grasped and collected into the basket by Group 07's robot."@en ;
+    cap:hasColor "red" ;
+    cap:hasObjectLabel "toy_block_red" ;
+    cap:hasApproxWidth "0.04"^^xsd:decimal ;
+    cap:hasTaskRole cap:CollectableObject ;
+    cap:hasPoseFrame "world/object_block_01" ;
+    cap:hasAffordance g07:graspingAffordance01 ;
+    cap:canBeManipulatedBy g07:parallelGripper01 .
+
+g07:toyBlock02
+    a cap:ToyBlock ;
+    rdfs:label "toy block 02"@en ;
+    rdfs:comment
+        "A blue toy block to be grasped and collected into the basket by Group 07's robot."@en ;
+    cap:hasColor "blue" ;
+    cap:hasObjectLabel "toy_block_blue" ;
+    cap:hasApproxWidth "0.04"^^xsd:decimal ;
+    cap:hasTaskRole cap:CollectableObject ;
+    cap:hasPoseFrame "world/object_block_02" ;
+    cap:hasAffordance g07:graspingAffordance01 ;
+    cap:canBeManipulatedBy g07:parallelGripper01 .
+
+g07:basket01
+    a cap:Basket ;
+    rdfs:label "basket 01"@en ;
+    rdfs:comment
+        "The container basket defined by Group 07, used as a collection target for toy blocks. It is not the primary grasp object in this task."@en ;
+    cap:hasColor "brown" ;
+    cap:hasObjectLabel "collection_basket" ;
+    cap:hasApproxWidth "0.30"^^xsd:decimal ;
+    cap:hasTaskRole cap:ContainerTarget ;
+    cap:hasPoseFrame "world/object_basket" ;
+    cap:hasAffordance g07:containmentAffordance01 .

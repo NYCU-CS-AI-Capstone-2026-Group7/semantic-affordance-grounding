@@ -1,0 +1,20 @@
+# Query 2 (optional): Retrieve all task objects with type, role, and affordances.
+# Useful for verifying that every instance is correctly typed and annotated.
+
+PREFIX cap:  <https://hcis.io/ontology/aicapstone/2026/>
+PREFIX g07:  <https://hcis.io/ontology/aicapstone/2026/group07/>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+
+SELECT DISTINCT ?obj ?type ?label ?role ?affordance
+WHERE {
+    ?obj a ?type .
+    ?type rdfs:subClassOf* cap:PhysicalObject .
+    FILTER(?type != owl:Thing && ?type != cap:PhysicalObject)
+    OPTIONAL { ?obj rdfs:label      ?label     . FILTER(lang(?label) = "en") }
+    OPTIONAL { ?obj cap:hasTaskRole ?role      . }
+    OPTIONAL { ?obj cap:hasAffordance ?aff .
+               ?aff a ?affordance . }
+}
+ORDER BY ?type ?obj
