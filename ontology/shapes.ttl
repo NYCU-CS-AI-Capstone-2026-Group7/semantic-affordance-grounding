@@ -1,0 +1,45 @@
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix cap:  <https://hcis.io/ontology/aicapstone/2026/> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# SHACL shapes for the course ontology — validate core PhysicalObject properties
+
+cap:PhysicalObjectShape
+    a sh:NodeShape ;
+    # Target inferred PhysicalObject instances but exclude EndEffector using a SPARQL target
+    sh:target [
+        a sh:SPARQLTarget ;
+        sh:select """
+            SELECT ?this WHERE {
+                ?this a <https://hcis.io/ontology/aicapstone/2026/>:PhysicalObject .
+                FILTER NOT EXISTS { ?this a <https://hcis.io/ontology/aicapstone/2026/>:EndEffector. }
+            }
+        """ ;
+    ] ;
+    sh:message "PhysicalObject must have a human-readable object label (cap:hasObjectLabel)." ;
+    sh:property [
+        sh:path cap:hasObjectLabel ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path cap:hasApproxWidth ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path cap:hasPoseFrame ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] .
+
+# Optional: ensure affordances link to an Affordance class
+cap:AffordanceLinkShape
+    a sh:NodeShape ;
+    sh:targetClass cap:PhysicalObject ;
+    sh:property [
+        sh:path cap:hasAffordance ;
+        sh:class cap:Affordance ;
+        sh:minCount 0 ;
+    ] .

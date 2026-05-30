@@ -12,16 +12,21 @@ This script:
 4. Executes the SPARQL queries from queries/ and saves results to results/.
 
 Dependencies:
-    pip install rdflib owlrl
+    pip install rdflib owlrl pyshacl
 """
 
 import sys
 from pathlib import Path
 
 try:
-    from rdflib import Graph, Namespace, RDF, RDFS, OWL
-    from rdflib.namespace import SKOS
     import owlrl
+    from rdflib import OWL, RDF, RDFS, Graph, Namespace
+    from rdflib.namespace import SKOS
+
+    try:
+        from pyshacl import validate
+    except Exception:
+        validate = None
 except ImportError:
     sys.exit("ERROR: Missing dependencies. Run:  pip install rdflib owlrl")
 
@@ -30,15 +35,15 @@ except ImportError:
 # ---------------------------------------------------------------------------
 BASE = Path(__file__).resolve().parent.parent  # hw5/
 
-ONTOLOGY_DIR  = BASE / "ontology"
-IMPORTS_DIR   = ONTOLOGY_DIR / "imports"
-QUERIES_DIR   = BASE / "queries"
-RESULTS_DIR   = BASE / "results"
+ONTOLOGY_DIR = BASE / "ontology"
+IMPORTS_DIR = ONTOLOGY_DIR / "imports"
+QUERIES_DIR = BASE / "queries"
+RESULTS_DIR = BASE / "results"
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
-GROUP_ONTOLOGY  = ONTOLOGY_DIR / "group-ontology.ttl"
-COURSE_ONTOLOGY = IMPORTS_DIR  / "course-affordance.ttl"
-INFERRED_OUT    = ONTOLOGY_DIR / "inferred-results.ttl"
+GROUP_ONTOLOGY = ONTOLOGY_DIR / "group-ontology.ttl"
+COURSE_ONTOLOGY = IMPORTS_DIR / "course-affordance.ttl"
+INFERRED_OUT = ONTOLOGY_DIR / "inferred-results.ttl"
 
 CAP = Namespace("https://hcis.io/ontology/aicapstone/2026/")
 G07 = Namespace("https://hcis.io/ontology/aicapstone/2026/group07/")
@@ -72,6 +77,42 @@ owlrl.DeductiveClosure(owlrl.OWLRL_Semantics).expand(g)
 print(f"  Triples after reasoning : {len(g)}")
 
 # ---------------------------------------------------------------------------
+# Step 2.5 — SHACL validation (optional but recommended)
+# ---------------------------------------------------------------------------
+print()
+print("=" * 60)
+print("Step 2.5: SHACL validation of the inferred graph")
+print("=" * 60)
+
+SHAPES_FILE = ONTOLOGY_DIR / "shapes.ttl"
+
+if not SHAPES_FILE.exists():
+    print(f"  No SHACL shapes found at {SHAPES_FILE.name}; skipping validation")
+else:
+    if validate is None:
+        sys.exit("ERROR: Missing dependency 'pyshacl'. Run: pip install pyshacl")
+
+    sh = Graph()
+    sh.parse(SHAPES_FILE, format="turtle")
+
+    conforms, results_graph, results_text = validate(
+        data_graph=g,
+        shacl_graph=sh,
+        inference="rdfs",
+        serialize_report_graph=True,
+    )
+
+    report_file = RESULTS_DIR / "shacl_report.txt"
+    report_file.write_text(str(results_text))
+
+    if conforms:
+        print("  SHACL validation: conforms")
+    else:
+        print(f"  SHACL validation: FAIL — report saved to {report_file}")
+        print(results_text)
+        sys.exit(1)
+
+# ---------------------------------------------------------------------------
 # Step 3 — Export inferred graph
 # ---------------------------------------------------------------------------
 print()
@@ -93,9 +134,7 @@ print("=" * 60)
 QUERY_GRASPABLE = (QUERIES_DIR / "graspable_objects.rq").read_text()
 
 # Prepend missing prefix for rdfs (rdflib SPARQL needs it explicitly)
-QUERY_GRASPABLE = (
-    "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" + QUERY_GRASPABLE
-)
+QUERY_GRASPABLE = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" + QUERY_GRASPABLE
 
 results = g.query(QUERY_GRASPABLE)
 
@@ -104,11 +143,15 @@ output_lines.append(f"{'obj':<55} {'label':<25} {'color':<10} {'objectLabel':<22
 output_lines.append("-" * 140)
 
 for row in results:
-    obj   = str(row.obj).replace("https://hcis.io/ontology/aicapstone/2026/group07/", "g07:")
-    label = str(row.label)       if row.label       else ""
-    color = str(row.color)       if row.color       else ""
-    olbl  = str(row.objectLabel) if row.objectLabel else ""
-    role  = str(row.role).replace("https://hcis.io/ontology/aicapstone/2026/", "cap:") if row.role else ""
+    obj = str(row.obj).replace("https://hcis.io/ontology/aicapstone/2026/group07/", "g07:")
+    label = str(row.label) if row.label else ""
+    color = str(row.color) if row.color else ""
+    olbl = str(row.objectLabel) if row.objectLabel else ""
+    role = (
+        str(row.role).replace("https://hcis.io/ontology/aicapstone/2026/", "cap:")
+        if row.role
+        else ""
+    )
     output_lines.append(f"{obj:<55} {label:<25} {color:<10} {olbl:<22} {role}")
 
 output_text = "\n".join(output_lines)
