@@ -98,7 +98,8 @@ else:
     conforms, results_graph, results_text = validate(
         data_graph=g,
         shacl_graph=sh,
-        inference="rdfs",
+        inference="none",
+        advanced=True,
         serialize_report_graph=True,
     )
 

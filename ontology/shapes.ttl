@@ -11,9 +11,10 @@ cap:PhysicalObjectShape
     sh:target [
         a sh:SPARQLTarget ;
         sh:select """
+            PREFIX cap: <https://hcis.io/ontology/aicapstone/2026/>
             SELECT ?this WHERE {
-                ?this a <https://hcis.io/ontology/aicapstone/2026/>:PhysicalObject .
-                FILTER NOT EXISTS { ?this a <https://hcis.io/ontology/aicapstone/2026/>:EndEffector. }
+                ?this a cap:PhysicalObject .
+                FILTER NOT EXISTS { ?this a cap:EndEffector . }
             }
         """ ;
     ] ;
