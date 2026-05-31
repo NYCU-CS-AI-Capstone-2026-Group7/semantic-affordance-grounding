@@ -1,36 +1,69 @@
-# Homework 5: Ontology-based Semantic Grounding
+# AI Capstone 2026 - Homework 5: Ontology-based Semantic Grounding
 
-This folder contains the specification and starter ontology resources for Homework 5 in the AI Capstone course.
+**Group 07** | National Yang Ming Chiao Tung University (NYCU) - Computer Science Dept.
 
-## Files
+## 1. Project Title & Group Members
+* **Project Title:** Group 07 Semantic Affordance Grounding Artifact
+* **Members:**
+  * 112550169 潘仰祐 | 112550095 葉羽宸 | 112550141 王佳欣
+  * 112550194 徐凡懿 | 113550173 曹育誠 | 113550050 陳建霖
 
-- `Homework 5 Ontology-based Semantic Grounding.pdf`  
-  The full homework specification. Students should read this document carefully before starting the assignment. It defines the task objective, required repository structure, ontology requirements, reasoning workflow, SPARQL query requirements, and grading criteria.
+## 2. Selected Task(s)
+Our group modeled the environment objects and semantic grounding for all three baseline tasks defined in the course project:
+1. **Cup Stacking:** Incorporating target cups and reference cups.
+2. **Cutlery Arrangement:** Incorporating manipulation targets (knife, fork) and a placement reference (plate).
+3. **Toy Block Collection:** Incorporating collectable objects (toy blocks) and a container target (basket).
 
-- `course-affordance.ttl`  
-  The shared course ontology for affordance-based semantic grounding. Students should import or reuse this vocabulary when building their group ontology.
+## 3. Ontology Design & Advanced Features
+Our ontology (`group-ontology.ttl`) grounds perceived simulation objects into queryable semantic entities. The design imports the core course vocabulary (`course-affordance.ttl`) and extends it with specific instances (`g07:`). 
 
-- `course-alignment.ttl`  
-  The alignment ontology that connects the course vocabulary to broader semantic references where appropriate. Students may inspect it to understand how course terms are positioned relative to external or upper-level semantic structures.
+**Advanced Extension (Gripper Constraints):** Beyond the baseline requirements, we introduced hardware-specific constraints. We defined a `parallelGripper01` as an `EndEffector` with a specific `hasApproxWidth` ("0.08"). Objects explicitly state their manipulability via `canBeManipulatedBy` and their own `hasApproxWidth`, correlating the physical dimensions of the gripper with the graspable targets. We also successfully generated automated documentation using **Widoco**, which is available in the `docs/` directory.
 
-## Submission Reminder
+## 4. Modeled Objects & Affordances Table
+| Instance URI (`g07:`) | Object Class | Asserted Affordance(s) | Task Role |
+| :--- | :--- | :--- | :--- |
+| `blueCup01` | `cap:Cup` | `cap:GraspingAffordance`, `cap:StackabilityAffordance` | `cap:TargetObject` |
+| `pinkCup01` | `cap:Cup` | `cap:GraspingAffordance`, `cap:StackabilityAffordance` | `cap:TargetObject` |
+| `knife01` | `cap:Knife` | `cap:GraspingAffordance` | `cap:TargetObject` |
+| `fork01` | `cap:Fork` | `cap:GraspingAffordance` | `cap:TargetObject` |
+| `plate01` | `cap:Plate` | `cap:SupportAffordance` | `cap:ReferenceObject` |
+| `toyBlock01` | `cap:ToyBlock` | `cap:GraspingAffordance` | `cap:CollectableObject` |
+| `toyBlock02` | `cap:ToyBlock` | `cap:GraspingAffordance` | `cap:CollectableObject` |
+| `basket01` | `cap:Basket` | `cap:ContainmentAffordance` | `cap:ContainerTarget` |
 
-Each group should submit a GitHub repository following the structure specified in the homework document. The submitted repository should include the group-authored ontology, imported ontology files, inferred results, SPARQL queries, query outputs, screenshots when appropriate, and a report or README explaining the modeling and reasoning workflow.
+## 5. Namespace Policy
+* **`cap:`** (`https://hcis.io/ontology/aicapstone/2026/`): Course vocabulary for base classes and properties.
+* **`g07:`** (`https://hcis.io/ontology/aicapstone/2026/group07/`): Group-specific environment instances and metadata.
 
-## Assessment Note: Ontology Documentation Verification with Widoco
-
-As part of the assessment of ontology completeness and readability, groups are encouraged to check whether their ontology can be successfully processed by [Widoco](https://github.com/dgarijo/Widoco), a tool for generating ontology documentation from OWL/RDF ontology files. 
-
-Widoco generation is not the only criterion for evaluating the group ontology. However, it will be used as one practical verification tool for checking whether the submitted ontology is sufficiently well-formed, structurally complete, and readable for automatic documentation. If Widoco can generate documentation from your ontology without major errors, this is a good indication that the ontology file is suitable for further inspection and reuse.
-
-A reference command is shown below:
+## 6. Instructions for Running the Query
+To retrieve inferred graspable objects, execute the query over the inferred graph using Apache Jena:
 
 ```bash
-java -jar widoco-{{version-number}}-jar-with-dependencies_JDK-17.jar \
-  -ontFile course-affordance.ttl \
-  -outFolder docs \
-  -rewriteAll \
-  -uniteSections
+arq --data ontology/inferred-results.ttl --query queries/graspable_objects.rq
 ```
 
-Questions about the homework may be sent to: `ccy@hptp.org`.
+## 7. Expected Query Output
+When executing graspable_objects.rq on the inferred graph, the query will return the following 6 distinct objects. Note that plate01 and basket01 are correctly excluded as they do not possess a grasping affordance.
+
+| obj | label | color | objectLabel | role |
+| :--- | :--- | :--- | :--- | :--- |
+| g07:blueCup01 | blue cup 01 | blue | blue_cup | cap:TargetObject |
+| g07:fork01 | fork 01 | silver | cutlery_fork | cap:TargetObject |
+| g07:knife01 | knife 01 | silver | cutlery_knife | cap:TargetObject |
+| g07:pinkCup01 | pink cup 01 | pink | pink_cup | cap:TargetObject |
+| g07:toyBlock01 | toy block 01 | red | toy_block_red | cap:CollectableObject |
+| g07:toyBlock02 | toy block 02 | blue | toy_block_blue | cap:CollectableObject |
+
+## 8. Explanation of Inference vs. Assertion
+We did not manually assert g07:blueCup01 a cap:GraspableObject. Instead, cap:GraspableObject is defined conceptually using an owl:equivalentClass combined with an owl:intersectionOf axiom.
+
+The Description Logic pattern is:
+cap:GraspableObject ≡ cap:PhysicalObject ⊓ ∃cap:hasAffordance.cap:GraspingAffordance
+
+Since blueCup01 is asserted as a cap:Cup (which is a subclass of cap:PhysicalObject) and is asserted to have a cap:GraspingAffordance, the OWL reasoner dynamically classifies it under cap:GraspableObject during the reasoning phase.
+
+## 9. Generation of inferred-results.ttl
+The file ontology/inferred-results.ttl contains the full graph including all implicit triples explicitly materialized. It was generated by loading the original group-ontology.ttl (along with its imports) into an OWL 2 DL Reasoner (HermiT / Pellet via Protégé or Apache Jena InfModel). The reasoner evaluated the owl:Restriction axioms and exported the newly classified individuals into this new .ttl file.
+
+## 10. Repository Links
+https://github.com/NYCU-CS-AI-Capstone-2026-Group7/semantic-affordance-grounding
