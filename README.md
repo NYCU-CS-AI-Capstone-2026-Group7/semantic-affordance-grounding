@@ -17,7 +17,7 @@ Our group modeled the environment objects and semantic grounding for all three b
 ## 3. Ontology Design & Advanced Features
 Our ontology (`group-ontology.ttl`) grounds perceived simulation objects into queryable semantic entities. The design imports the core course vocabulary (`course-affordance.ttl`) and extends it with specific instances (`g07:`). 
 
-**Advanced Extension (Gripper Constraints):** Beyond the baseline requirements, we introduced hardware-specific constraints. We defined a `parallelGripper01` as an `EndEffector` with a specific `hasApproxWidth` ("0.08"). Objects explicitly state their manipulability via `canBeManipulatedBy` and their own `hasApproxWidth`, correlating the physical dimensions of the gripper with the graspable targets. We also successfully generated automated documentation using **Widoco**, which is available in the `docs/` directory.
+**Advanced Extension (Gripper Constraints):** Beyond the baseline requirements, we introduced hardware-specific constraints. We defined a `parallelGripper01` as an `EndEffector` with a specific `hasApproxWidth` ("0.08"). Objects explicitly state their manipulability via `canBeManipulatedBy` and their own `hasApproxWidth`, correlating the physical dimensions of the gripper with the graspable targets.
 
 ## 4. Modeled Objects & Affordances Table
 | Instance URI (`g07:`) | Object Class | Asserted Affordance(s) | Task Role |
@@ -95,7 +95,8 @@ The file `ontology/inferred-results.ttl` contains the full graph including all i
 │   ├── shapes.ttl               # SHACL validation shapes
 │   ├── inferred-results.ttl     # The generated ontology after reasoning
 │   └── imports/
-│       └── course-affordance.ttl # Base course vocabulary
+│       ├── course-affordance.ttl # Base course vocabulary
+│       └── course-alignment.ttl # Alignment axioms mapping the course terms to standardized upper-level ontologies (CORA, SOMA)
 ├── queries/
 │   ├── graspable_objects.rq     # SPARQL query for extracting graspable objects
 │   └── task_objects.rq          # (Optional) SPARQL query to verify all objects and their roles

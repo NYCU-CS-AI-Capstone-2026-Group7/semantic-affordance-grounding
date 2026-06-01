@@ -1,25 +1,25 @@
 obj                                 type                                     label                role                      affordance
 --------------------------------------------------------------------------------------------------------------------------------------------
-g07:blueCup01                       n70c2210730ff464e858b236f160ad540b2      blue cup 01          cap:TargetObject          http://www.w3.org/2002/07/owl#Thing
-g07:blueCup01                       n70c2210730ff464e858b236f160ad540b2      blue cup 01          cap:TargetObject          cap:Affordance
-g07:blueCup01                       n70c2210730ff464e858b236f160ad540b2      blue cup 01          cap:TargetObject          cap:GraspingAffordance
-g07:blueCup01                       n70c2210730ff464e858b236f160ad540b2      blue cup 01          cap:TargetObject          cap:StackabilityAffordance
-g07:fork01                          n70c2210730ff464e858b236f160ad540b2      fork 01              cap:TargetObject          http://www.w3.org/2002/07/owl#Thing
-g07:fork01                          n70c2210730ff464e858b236f160ad540b2      fork 01              cap:TargetObject          cap:Affordance
-g07:fork01                          n70c2210730ff464e858b236f160ad540b2      fork 01              cap:TargetObject          cap:GraspingAffordance
-g07:knife01                         n70c2210730ff464e858b236f160ad540b2      knife 01             cap:TargetObject          http://www.w3.org/2002/07/owl#Thing
-g07:knife01                         n70c2210730ff464e858b236f160ad540b2      knife 01             cap:TargetObject          cap:Affordance
-g07:knife01                         n70c2210730ff464e858b236f160ad540b2      knife 01             cap:TargetObject          cap:GraspingAffordance
-g07:pinkCup01                       n70c2210730ff464e858b236f160ad540b2      pink cup 01          cap:TargetObject          http://www.w3.org/2002/07/owl#Thing
-g07:pinkCup01                       n70c2210730ff464e858b236f160ad540b2      pink cup 01          cap:TargetObject          cap:Affordance
-g07:pinkCup01                       n70c2210730ff464e858b236f160ad540b2      pink cup 01          cap:TargetObject          cap:GraspingAffordance
-g07:pinkCup01                       n70c2210730ff464e858b236f160ad540b2      pink cup 01          cap:TargetObject          cap:StackabilityAffordance
-g07:toyBlock01                      n70c2210730ff464e858b236f160ad540b2      toy block 01         cap:CollectableObject     http://www.w3.org/2002/07/owl#Thing
-g07:toyBlock01                      n70c2210730ff464e858b236f160ad540b2      toy block 01         cap:CollectableObject     cap:Affordance
-g07:toyBlock01                      n70c2210730ff464e858b236f160ad540b2      toy block 01         cap:CollectableObject     cap:GraspingAffordance
-g07:toyBlock02                      n70c2210730ff464e858b236f160ad540b2      toy block 02         cap:CollectableObject     http://www.w3.org/2002/07/owl#Thing
-g07:toyBlock02                      n70c2210730ff464e858b236f160ad540b2      toy block 02         cap:CollectableObject     cap:Affordance
-g07:toyBlock02                      n70c2210730ff464e858b236f160ad540b2      toy block 02         cap:CollectableObject     cap:GraspingAffordance
+g07:blueCup01                       nc9ecf58ca2cd4163b7ed737d53be59c8b7      blue cup 01          cap:TargetObject          http://www.w3.org/2002/07/owl#Thing
+g07:blueCup01                       nc9ecf58ca2cd4163b7ed737d53be59c8b7      blue cup 01          cap:TargetObject          cap:Affordance
+g07:blueCup01                       nc9ecf58ca2cd4163b7ed737d53be59c8b7      blue cup 01          cap:TargetObject          cap:GraspingAffordance
+g07:blueCup01                       nc9ecf58ca2cd4163b7ed737d53be59c8b7      blue cup 01          cap:TargetObject          cap:StackabilityAffordance
+g07:fork01                          nc9ecf58ca2cd4163b7ed737d53be59c8b7      fork 01              cap:TargetObject          http://www.w3.org/2002/07/owl#Thing
+g07:fork01                          nc9ecf58ca2cd4163b7ed737d53be59c8b7      fork 01              cap:TargetObject          cap:Affordance
+g07:fork01                          nc9ecf58ca2cd4163b7ed737d53be59c8b7      fork 01              cap:TargetObject          cap:GraspingAffordance
+g07:knife01                         nc9ecf58ca2cd4163b7ed737d53be59c8b7      knife 01             cap:TargetObject          http://www.w3.org/2002/07/owl#Thing
+g07:knife01                         nc9ecf58ca2cd4163b7ed737d53be59c8b7      knife 01             cap:TargetObject          cap:Affordance
+g07:knife01                         nc9ecf58ca2cd4163b7ed737d53be59c8b7      knife 01             cap:TargetObject          cap:GraspingAffordance
+g07:pinkCup01                       nc9ecf58ca2cd4163b7ed737d53be59c8b7      pink cup 01          cap:TargetObject          http://www.w3.org/2002/07/owl#Thing
+g07:pinkCup01                       nc9ecf58ca2cd4163b7ed737d53be59c8b7      pink cup 01          cap:TargetObject          cap:Affordance
+g07:pinkCup01                       nc9ecf58ca2cd4163b7ed737d53be59c8b7      pink cup 01          cap:TargetObject          cap:GraspingAffordance
+g07:pinkCup01                       nc9ecf58ca2cd4163b7ed737d53be59c8b7      pink cup 01          cap:TargetObject          cap:StackabilityAffordance
+g07:toyBlock01                      nc9ecf58ca2cd4163b7ed737d53be59c8b7      toy block 01         cap:CollectableObject     http://www.w3.org/2002/07/owl#Thing
+g07:toyBlock01                      nc9ecf58ca2cd4163b7ed737d53be59c8b7      toy block 01         cap:CollectableObject     cap:Affordance
+g07:toyBlock01                      nc9ecf58ca2cd4163b7ed737d53be59c8b7      toy block 01         cap:CollectableObject     cap:GraspingAffordance
+g07:toyBlock02                      nc9ecf58ca2cd4163b7ed737d53be59c8b7      toy block 02         cap:CollectableObject     http://www.w3.org/2002/07/owl#Thing
+g07:toyBlock02                      nc9ecf58ca2cd4163b7ed737d53be59c8b7      toy block 02         cap:CollectableObject     cap:Affordance
+g07:toyBlock02                      nc9ecf58ca2cd4163b7ed737d53be59c8b7      toy block 02         cap:CollectableObject     cap:GraspingAffordance
 g07:basket01                        cap:Basket                               basket 01            cap:ContainerTarget       http://www.w3.org/2002/07/owl#Thing
 g07:basket01                        cap:Basket                               basket 01            cap:ContainerTarget       cap:Affordance
 g07:basket01                        cap:Basket                               basket 01            cap:ContainerTarget       cap:ContainmentAffordance
