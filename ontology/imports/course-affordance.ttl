@@ -1,8 +1,8 @@
-@prefix cap:  <https://hcis.io/ontology/aicapstone/2026/> .
-@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
-@prefix owl:  <http://www.w3.org/2002/07/owl#> .
-@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix cap:     <https://hcis.io/ontology/aicapstone/2026/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix vann:    <http://purl.org/vocab/vann/> .
 @prefix foaf:    <http://xmlns.com/foaf/0.1/> .
@@ -198,7 +198,11 @@ cap:hasPoseFrame
 cap:hasApproxWidth
     a owl:DatatypeProperty ;
     rdfs:domain cap:PhysicalObject ;
-    rdfs:range xsd:decimal .
+    rdfs:range xsd:decimal ;
+    rdfs:label "has approximate width"@en ;
+    rdfs:comment
+        "Records an approximate object width, which may be useful for checking whether an object fits within a gripper capability."@en .
+
 
 # Course Objects
 
@@ -277,7 +281,4 @@ cap:Basket
         a owl:Restriction ;
         owl:onProperty cap:hasAffordance ;
         owl:someValuesFrom cap:ContainmentAffordance
-    ] ;
-    rdfs:label "has approximate width"@en ;
-    rdfs:comment
-        "Records an approximate object width, which may be useful for checking whether an object fits within a gripper capability."@en .
+    ] .
