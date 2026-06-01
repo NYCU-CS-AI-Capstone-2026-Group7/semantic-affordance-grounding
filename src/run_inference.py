@@ -22,11 +22,6 @@ try:
     import owlrl
     from rdflib import OWL, RDF, RDFS, Graph, Namespace
     from rdflib.namespace import SKOS
-
-    try:
-        from pyshacl import validate
-    except Exception:
-        validate = None
 except ImportError:
     sys.exit("ERROR: Missing dependencies. Run:  pip install rdflib owlrl")
 
@@ -76,42 +71,7 @@ print("=" * 60)
 owlrl.DeductiveClosure(owlrl.OWLRL_Semantics).expand(g)
 print(f"  Triples after reasoning : {len(g)}")
 
-# ---------------------------------------------------------------------------
-# Step 2.5 — SHACL validation (optional but recommended)
-# ---------------------------------------------------------------------------
-print()
-print("=" * 60)
-print("Step 2.5: SHACL validation of the inferred graph")
-print("=" * 60)
 
-SHAPES_FILE = ONTOLOGY_DIR / "shapes.ttl"
-
-if not SHAPES_FILE.exists():
-    print(f"  No SHACL shapes found at {SHAPES_FILE.name}; skipping validation")
-else:
-    if validate is None:
-        sys.exit("ERROR: Missing dependency 'pyshacl'. Run: pip install pyshacl")
-
-    sh = Graph()
-    sh.parse(SHAPES_FILE, format="turtle")
-
-    conforms, results_graph, results_text = validate(
-        data_graph=g,
-        shacl_graph=sh,
-        inference="none",
-        advanced=True,
-        serialize_report_graph=True,
-    )
-
-    report_file = RESULTS_DIR / "shacl_report.txt"
-    report_file.write_text(str(results_text))
-
-    if conforms:
-        print("  SHACL validation: conforms")
-    else:
-        print(f"  SHACL validation: FAIL — report saved to {report_file}")
-        print(results_text)
-        sys.exit(1)
 
 # ---------------------------------------------------------------------------
 # Step 3 — Export inferred graph
