@@ -76,7 +76,7 @@ The file `ontology/inferred-results.ttl` contains the full graph including all i
 
 ---
 
-## 11. Additional Requirements (Section 16.3)
+## Implementation Details & Workflow
 
 ### Repository Structure
 ```
