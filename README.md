@@ -36,10 +36,16 @@ Our ontology (`group-ontology.ttl`) grounds perceived simulation objects into qu
 * **`g07:`** (`https://hcis.io/ontology/aicapstone/2026/group07/`): Group-specific environment instances and metadata.
 
 ## 6. Instructions for Running the Query
-To generate the inferred graph and run the SPARQL queries, execute the Python inference script:
+To generate the inferred graph and run the SPARQL queries, follow these steps:
 
+1. **Run Inference** (Generates `ontology/inferred-results.ttl`):
 ```bash
 python3 src/run_inference.py
+```
+
+2. **Run Queries** (Executes both `graspable_objects.rq` and `task_objects.rq`):
+```bash
+python3 src/run_queries.py
 ```
 
 ## 7. Expected Query Output
@@ -69,10 +75,13 @@ The file `ontology/inferred-results.ttl` contains the full graph including all i
 * **Repository:** [NYCU-CS-AI-Capstone-2026-Group7/semantic-affordance-grounding](https://github.com/NYCU-CS-AI-Capstone-2026-Group7/semantic-affordance-grounding)
 * **Ontology File:** [ontology/group-ontology.ttl](ontology/group-ontology.ttl)
 * **Query File:** [queries/graspable_objects.rq](queries/graspable_objects.rq)
-* **Source Code:** [src/run_inference.py](src/run_inference.py)
+* **Source Code:** 
+  * [src/run_inference.py](src/run_inference.py)
+  * [src/run_queries.py](src/run_queries.py)
 * **Result Files:** 
   * [ontology/inferred-results.ttl](ontology/inferred-results.ttl)
   * [results/graspable_objects_output.txt](results/graspable_objects_output.txt)
+  * [results/task_objects_output.txt](results/task_objects_output.txt)
 
 ---
 
@@ -88,10 +97,12 @@ The file `ontology/inferred-results.ttl` contains the full graph including all i
 │   └── imports/
 │       └── course-affordance.ttl # Base course vocabulary
 ├── queries/
-│   └── graspable_objects.rq     # SPARQL query for extracting graspable objects
+│   ├── graspable_objects.rq     # SPARQL query for extracting graspable objects
+│   └── task_objects.rq          # (Optional) SPARQL query to verify all objects and their roles
 ├── results/                     # Output results (query outputs, SHACL reports)
 ├── src/
-│   ├── run_inference.py         # Main script for reasoning and executing SPARQL
+│   ├── run_inference.py         # Script for materializing the inferred graph
+│   ├── run_queries.py           # Script for executing SPARQL queries on the inferred graph
 │   └── validate_shacl.py        # Script for validating the graph using SHACL
 ├── requirements.txt             # Python dependencies
 └── README.md                    # This file
@@ -105,7 +116,7 @@ Our ontology imports the course base vocabulary:
 1. **Load Ontologies:** Load both `course-affordance.ttl` and `group-ontology.ttl` into an RDF graph using `rdflib`.
 2. **OWL RL Reasoning:** Use `owlrl.DeductiveClosure` in `run_inference.py` to materialize inferred triples based on OWL semantics.
 3. **Export:** Serialize the fully expanded graph to `ontology/inferred-results.ttl`.
-4. **SPARQL Query:** Execute `graspable_objects.rq` on the materialized graph to extract our target graspable objects and save the formatted output to `results/`.
+4. **SPARQL Query:** Use `run_queries.py` to execute queries (`graspable_objects.rq`, `task_objects.rq`) on the materialized graph and save the formatted outputs to `results/`.
 5. **SHACL Validation:** We validate the inferred graph against constraints defined in `shapes.ttl` using `validate_shacl.py` to ensure correctness (e.g., confirming all objects have valid properties).
 
 ### SHACL Validation
