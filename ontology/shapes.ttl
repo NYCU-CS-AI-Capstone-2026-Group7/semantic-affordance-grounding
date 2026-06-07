@@ -30,8 +30,18 @@ cap:PhysicalObjectShape
         sh:minCount 1 ;
     ] ;
     sh:property [
+        sh:path cap:hasColor ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
         sh:path cap:hasPoseFrame ;
         sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path cap:hasTaskRole ;
+        sh:class cap:TaskRole ;
         sh:minCount 1 ;
     ] .
 
