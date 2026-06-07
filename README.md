@@ -3,10 +3,17 @@
 **Group 07** | National Yang Ming Chiao Tung University (NYCU) - Computer Science Dept.
 
 ## 1. Project Title & Group Members
-* **Project Title:** Group 07 Semantic Affordance Grounding Artifact
-* **Members:**
-  * 112550169 潘仰祐 | 112550095 葉羽宸 | 112550141 王佳欣
-  * 112550194 徐凡懿 | 113550173 曹育誠 | 113550050 陳建霖
+
+**Project Title:** Group 07 Semantic Affordance Grounding Artifact
+
+| Student ID | Name | Contribution |
+| :--- | :--- | :--- |
+| 112550169 | 潘仰祐 | — |
+| 112550095 | 葉羽宸 | — |
+| 112550141 | 王佳欣 | — |
+| 112550194 | 徐凡懿 | Code revision ; report review |
+| 113550173 | 曹育誠 | — |
+| 113550050 | 陳建霖 | — |
 
 ## 2. Selected Task(s)
 Our group modeled the environment objects and semantic grounding for all three baseline tasks defined in the course project:
