@@ -125,9 +125,17 @@ The file `ontology/inferred-results.ttl` contains the full graph including all i
 │   ├── run_inference.py         # Script for materializing the inferred graph
 │   ├── run_queries.py           # Script for executing SPARQL queries on the inferred graph
 │   └── validate_shacl.py        # Script for validating the graph using SHACL
-├── requirements.txt             # Python dependencies
+├── requirements.txt             # Core Python dependencies (direct abstract packages)
+├── requirements-lock.txt        # Frozen dependency environment for reproducible builds
 └── README.md                    # This file
 ```
+
+### Dependency Management
+
+We maintain two dependency specification files to balance flexibility and reproducibility:
+* **`requirements.txt`**: Declares only the top-level, direct core libraries (`rdflib`, `owlrl`, `pyshacl`) required to run the pipeline. This acts as the abstract requirements specification, allowing for flexible dependency resolution across different platforms and OS versions.
+* **`requirements-lock.txt`**: A complete, locked snapshot of the exact package versions and their sub-dependencies captured via `pip freeze` in our verified development environment. This ensures 100% reproducible builds and execution consistency for testing and deployment.
+
 
 ### Imported Resources
 
