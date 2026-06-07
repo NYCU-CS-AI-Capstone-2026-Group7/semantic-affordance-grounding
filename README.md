@@ -6,14 +6,14 @@
 
 **Project Title:** Group 07 Semantic Affordance Grounding Artifact
 
-| Student ID | Name   | Contribution                       |
-| :--------- | :----- | :--------------------------------- |
-| 112550169  | 潘仰祐 | —                                  |
-| 112550095  | 葉羽宸 | —                                  |
-| 112550141  | 王佳欣 | Code revision ; report review      |
-| 112550194  | 徐凡懿 | Code revision ; report review      |
-| 113550173  | 曹育誠 | —                                  |
-| 113550050  | 陳建霖 | shacl & query code ; README review |
+| Student ID | Name   | Main Contribution                                                  |
+| :--------- | :----- | :----------------------------------------------------------------- |
+| 112550169  | 潘仰祐 | Code & report reviewing                                            |
+| 112550095  | 葉羽宸 | Tech route selection & foundational ontology/script coding         |
+| 112550141  | 王佳欣 | Code revision & report review                                      |
+| 112550194  | 徐凡懿 | Code revision & report review                                      |
+| 113550173  | 曹育誠 | Validation with Widoco (locally) ; README and report writing       |
+| 113550050  | 陳建霖 | SHACL & query code ; README review                                 |
 
 ## 2. Selected Task(s)
 
