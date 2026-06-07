@@ -49,8 +49,6 @@ def run_graspable_objects():
         return
 
     QUERY = query_file.read_text()
-    # Prepend missing prefix for rdfs (rdflib SPARQL needs it explicitly)
-    QUERY = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" + QUERY
     results = g.query(QUERY)
 
     output_lines = []

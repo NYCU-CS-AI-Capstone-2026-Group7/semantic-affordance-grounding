@@ -2,8 +2,9 @@
 # Must be executed over an inferred model (not raw asserted graph).
 # Expected output: blueCup01, pinkCup01, knife01, fork01, toyBlock01, toyBlock02
 
-PREFIX cap: <https://hcis.io/ontology/aicapstone/2026/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX cap:  <https://hcis.io/ontology/aicapstone/2026/>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 SELECT DISTINCT ?obj ?label ?color ?objectLabel ?role
 WHERE {
